@@ -1,37 +1,40 @@
-import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useWalletAddress } from '@sentre/senhub'
+import { useAppRoute, useWalletAddress } from '@sentre/senhub'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { PublicKey } from '@solana/web3.js'
 
-import { Row, Col, Typography, Button, Space } from 'antd'
-import IonIcon from '@sentre/antd-ionicon'
+import { Row, Col } from 'antd'
+import Notication from './notification'
+import AdminOnly from './adminOnly'
 
-import { AppDispatch, AppState } from 'model'
-import { increaseCounter } from 'model/main.controller'
+import Watcher from 'watchers'
+import configs from 'configs'
+
+const {
+  admin: { admins },
+} = configs
 
 const View = () => {
   const walletAddress = useWalletAddress()
-  const dispatch = useDispatch<AppDispatch>()
-  const counter = useSelector((state: AppState) => state.main.counter)
+  const { extend } = useAppRoute()
 
-  const increase = useCallback(() => dispatch(increaseCounter()), [dispatch])
+  const index = admins.findIndex((admin) =>
+    admin.equals(new PublicKey(walletAddress)),
+  )
+  if (index < 0) return <AdminOnly />
 
   return (
     <Row gutter={[24, 24]} align="middle">
       <Col span={24}>
-        <Space align="center">
-          <IonIcon name="newspaper-outline" />
-          <Typography.Title level={4}>App View</Typography.Title>
-        </Space>
+        <Switch>
+          <Route path={extend('/notification')} component={Notication} />
+          <Redirect
+            from="*"
+            to={extend('/notification', { absolutePath: true })}
+          />
+        </Switch>
       </Col>
-      <Col span={24}>
-        <Typography.Text>Address: {walletAddress}</Typography.Text>
-      </Col>
-      <Col>
-        <Typography.Text>Counter: {counter}</Typography.Text>
-      </Col>
-      <Col>
-        <Button onClick={increase}>Increase</Button>
-      </Col>
+      {/* In-Background Run Jobs */}
+      <Watcher />
     </Row>
   )
 }

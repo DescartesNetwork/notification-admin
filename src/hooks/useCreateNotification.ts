@@ -10,7 +10,7 @@ import {
 export type OnCreateNotificationProps = {
   type?: NotificationType
   sender: string
-  thumbnail: string
+  thumbnail?: string
   title: string
   content: string
   action: string

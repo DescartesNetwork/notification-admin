@@ -11,7 +11,6 @@ export type OnUpdateNotificationProps = {
   _id: string
   type?: NotificationType
   sender: string
-  thumbnail: string
   title: string
   content: string
   action: string

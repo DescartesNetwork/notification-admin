@@ -26,7 +26,6 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
   const [title, setTitle] = useState(data?.title || '')
   const [description, setDescription] = useState(data?.content || '')
   const [time, setTime] = useState(moment(new Date()).format() || '')
-  const [thumbnail, setThumbnail] = useState(data?.thumbnail || '')
   const [action, setAction] = useState(data?.action || '')
   const { onCreateNotification, loading: creatingLoading } =
     useCreateNotification()
@@ -34,6 +33,7 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
     useUpdateNotification()
 
   const onChange = (time: DatePickerProps['value']) => {
+    if (!time) return
     setTime(moment(time).format())
   }
 
@@ -52,10 +52,11 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
       <Col span={24}>
         <Space style={{ width: '100%' }} size={8} direction="vertical">
           <Typography.Text type="secondary">Description</Typography.Text>
-          <Input
+          <Input.TextArea
             placeholder="Input description"
             value={description}
             onChange={(val) => setDescription(val.target.value)}
+            rows={3}
           />
         </Space>
       </Col>
@@ -82,16 +83,6 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
           />
         </Space>
       </Col>
-      <Col span={24}>
-        <Space style={{ width: '100%' }} size={8} direction="vertical">
-          <Typography.Text type="secondary">Upload image</Typography.Text>
-          <Input
-            placeholder="Image url"
-            value={thumbnail}
-            onChange={(e) => setThumbnail(e.target.value)}
-          />
-        </Space>
-      </Col>
       <Col span={24} style={{ marginTop: 16 }}>
         <Row justify="end" gutter={[8, 8]}>
           <Col>
@@ -106,7 +97,6 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
                       title,
                       content: description,
                       action: action,
-                      thumbnail,
                       broadcastedAt: time,
                     })
                   : await onUpdateNotification({
@@ -115,7 +105,6 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
                       title,
                       content: description,
                       action: action,
-                      thumbnail,
                       broadcastedAt: time,
                     })
                 onCancel()

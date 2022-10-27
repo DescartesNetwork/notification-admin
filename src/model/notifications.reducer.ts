@@ -43,25 +43,21 @@ export const getNotifications = createAsyncThunk<
   NotificationsState,
   { limit: number; offset: number; broadcasted?: boolean },
   { state: any }
->(
-  `${NAME}/getNotifications`,
-  async ({ limit, offset, broadcasted = false }) => {
-    const { data: notifications } = await axios.get(api.notification.all, {
-      params: {
-        broadcasted,
-        limit,
-        offset,
-      },
-      withCredentials: true,
-    })
+>(`${NAME}/getNotifications`, async ({ limit, offset }) => {
+  const { data: notifications } = await axios.get(api.notification.index, {
+    params: {
+      limit,
+      offset,
+    },
+    withCredentials: true,
+  })
 
-    const formattedData: Record<string, NotificationData> = {}
-    for (const notification of notifications)
-      formattedData[notification._id] = notification
+  const formattedData: Record<string, NotificationData> = {}
+  for (const notification of notifications)
+    formattedData[notification._id] = notification
 
-    return formattedData
-  },
-)
+  return formattedData
+})
 
 export const addNotification = createAsyncThunk<
   NotificationsState,
@@ -95,7 +91,7 @@ export const upsetNotification = createAsyncThunk<
 >(`${NAME}/upsetNotification`, async (data) => {
   if (!data._id) throw new Error('Not found notification Id')
   const { data: notification, status } = await axios.patch(
-    api.notification.index + `/${data._id}`,
+    api.notification.index,
     data,
     {
       withCredentials: true,

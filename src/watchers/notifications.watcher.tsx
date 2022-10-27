@@ -18,7 +18,7 @@ const NotificationsWatcher = () => {
       await dispatch(
         getNotifications({
           offset: 0,
-          limit: LIMIT,
+          limit: 1000,
         }),
       )
       await dispatch(

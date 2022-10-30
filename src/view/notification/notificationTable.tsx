@@ -1,7 +1,7 @@
 import type { ColumnsType } from 'antd/es/table'
 import moment from 'moment'
 
-import { Table, Image, Typography, Tag } from 'antd'
+import { Table, Typography, Tag } from 'antd'
 import Action from './action'
 import { NotificationsState } from 'model/notifications.reducer'
 import { useNotifications } from 'hooks/useNotifications'
@@ -9,7 +9,6 @@ import { useNotifications } from 'hooks/useNotifications'
 export interface DataType {
   key: React.Key
   time: string
-  image: string
   title: string
   description: string
 }
@@ -23,7 +22,6 @@ export const formatNotificationsData = (
     data.push({
       key: notification._id,
       time: notification.broadcastedAt,
-      image: notification.thumbnail,
       title: notification.title,
       description: notification.content,
     })
@@ -37,13 +35,6 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'time',
     render: (time: string) => {
       return moment(time).format('MMMM Do YYYY, h:mm')
-    },
-  },
-  {
-    title: 'IMAGE',
-    dataIndex: 'image',
-    render: (image) => {
-      return <Image src={image} alt="Notification" />
     },
   },
   {

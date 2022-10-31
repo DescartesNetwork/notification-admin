@@ -16,8 +16,9 @@ const conf: Record<Env, Conf> = {
   development: {
     admins: [
       new PublicKey('8W6QginLcAydYyMYjxuyKQN56NzeakDE3aRFrAmocS6D'),
-      new PublicKey('pkGvE888eDrat79x46p2EmNNYspUsgvLKL9ynU9qSNW'),
       new PublicKey('2Mdbxjidw1oHPwkSsFqfaFcYHjLUrNdkVt98Xc1K5dac'),
+      new PublicKey('2ZBJ4zJ6vyqAeL4HaggYa28VVUsPas4kmXaRJhsJch37'),
+      new PublicKey('FProxTjZgWD4Exu1oYNQbJGuixVzEC1n5szu1xdWxVa2'),
     ],
   },
 
@@ -27,8 +28,9 @@ const conf: Record<Env, Conf> = {
   production: {
     admins: [
       new PublicKey('8W6QginLcAydYyMYjxuyKQN56NzeakDE3aRFrAmocS6D'),
-      new PublicKey('pkGvE888eDrat79x46p2EmNNYspUsgvLKL9ynU9qSNW'),
       new PublicKey('2Mdbxjidw1oHPwkSsFqfaFcYHjLUrNdkVt98Xc1K5dac'),
+      new PublicKey('2ZBJ4zJ6vyqAeL4HaggYa28VVUsPas4kmXaRJhsJch37'),
+      new PublicKey('FProxTjZgWD4Exu1oYNQbJGuixVzEC1n5szu1xdWxVa2'),
     ],
   },
 }

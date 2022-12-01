@@ -111,7 +111,7 @@ const NotificationForm = ({ onCancel, data }: NotificationFormProps) => {
               }}
               loading={!data ? creatingLoading : updatingLoading}
             >
-              Continue
+              Submit
             </Button>
           </Col>
         </Row>
